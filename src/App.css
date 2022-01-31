@@ -24,6 +24,19 @@ body {
   padding-right: 20px;
 }
 
+.list-design {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.like-button {
+  font-size: 18px;
+  margin-left: auto;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer; 
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
