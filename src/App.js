@@ -26,12 +26,13 @@ function App() {
   let [likeButton, likeButtonChangeFunc] = useState(0);
 
   //배열로 되어있는 데이터를 변경할 때는 전체 배열을 받아와서 변경을 하고 다시 배열을 입력해줘야함
-  function changePostTitle() {
-    //postTitle에 있는 데이터를 temp에 복사
-    let temp = [...postTitle];
-    temp[0] = "여자 코트 추천";
-    postTitleChangeFunction(temp);
-  }
+  //글 제목들 알파벳->ㄱㄴㄷ 순으로 정렬 (대신 게시물들의 정보들은 바뀌지 않음)
+  // function changePostTitle() {
+  //   //postTitle에 있는 데이터를 temp에 복사 ([...ex]는 deep copy)
+  //   let temp = [...postTitle];
+  //   temp.sort();
+  //   postTitleChangeFunction(temp);
+  // }
 
   return (
     // class 대신 className을 사용
@@ -39,13 +40,13 @@ function App() {
       <div className="black-nav">
         <div style={titleDesign}>ThinkMuk's Blog</div>
       </div>
-      <button
+      {/* <button
         onClick={() => {
           changePostTitle();
         }}
       >
         버튼
-      </button>
+      </button> */}
       <div className="list">
         {/* onclick안에는 함수만 들어갈 수 있다 
       사용법 onClick={클릭될 때 실행할 함수}
@@ -77,6 +78,25 @@ function App() {
         <p>2월 19일 발행</p>
         <hr />
       </div>
+
+      {/* component 만드는 법 */}
+      {/* component의 유의사항은:
+      1.이름은 반드시 첫문자가 대문자일것 
+      2.return()안에 있는건 태그 하나로 묶어야한다 */}
+      {/* component의 단점:
+      1. state를 쓸 때 많이 복잡해짐 (상위 component에서 만든 state 쓰려면 props 문법을 이용해야함) */}
+      <Modal />
+    </div>
+  );
+}
+
+//component 만드는법
+function Modal() {
+  return (
+    <div className="modal">
+      <h2>제목</h2>
+      <p>날짜</p>
+      <p>상세내용</p>
     </div>
   );
 }

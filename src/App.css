@@ -2,9 +2,15 @@
   text-align: center;
 }
 body {
-  font-family:
-  'nanumsquare';
+  font-family: "nanumsquare";
 }
+
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  background: #eee;
+}
+
 .black-nav {
   background: black;
   width: 100%;
@@ -34,7 +40,7 @@ body {
   margin-left: auto;
   justify-content: center;
   font-weight: bold;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .App-logo {
