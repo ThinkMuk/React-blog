@@ -34,6 +34,8 @@ function App() {
   //   postTitleChangeFunction(temp);
   // }
 
+  let [modal, modalChangeFunc] = useState(false);
+
   return (
     // class 대신 className을 사용
     <div className="App">
@@ -52,7 +54,14 @@ function App() {
       사용법 onClick={클릭될 때 실행할 함수}
       또는 onClick={ () => {실행할 내용} }식으로 함수를 직접 하나 그 자리에서 만들기도 된다  */}
         <div className="list-design">
-          <h3> {postTitle[0]} </h3>
+          <h3
+            onClick={() => {
+              modal == true ? modalChangeFunc(false) : modalChangeFunc(true);
+            }}
+          >
+            {" "}
+            {postTitle[0]}{" "}
+          </h3>
           <span
             className="like-button"
             onClick={() => {
@@ -85,7 +94,10 @@ function App() {
       2.return()안에 있는건 태그 하나로 묶어야한다 */}
       {/* component의 단점:
       1. state를 쓸 때 많이 복잡해짐 (상위 component에서 만든 state 쓰려면 props 문법을 이용해야함) */}
-      <Modal />
+
+      {/* 여기서는 if문 대신 삼항연산자 라는것을 사용함 */}
+      {/* ex) 조건식 ? 참일 때 실행할 코드 : 거짓일 때 실행할 코드 */}
+      {modal == true ? <Modal></Modal> : null}
     </div>
   );
 }
