@@ -18,9 +18,9 @@ function App() {
   //useState를 사용할때는 이렇게 2개의 array가 존재해야 한다.
   //이 useState안에는 문자, 숫자, array, object  다 저장이 가능하다
   let [postTitle, postTitleChangeFunction] = useState([
-    "남자 코트 추천",
-    "강남 우동 맛집",
-    "C++ 독학",
+    ["남자 코트 추천", "2월 17일 발행"],
+    ["강남 우동 맛집", "2월 18일 발행"],
+    ["C++ 독학", "2월 19일 발행"],
   ]);
   //likeButtonChangeFunc 같은 경우는 likeButton을 바꾸는 함수의 역할을 한다
   let [likeButton, likeButtonChangeFunc] = useState(0);
@@ -49,44 +49,40 @@ function App() {
       >
         버튼
       </button> */}
-      <div className="list">
-        {/* onclick안에는 함수만 들어갈 수 있다 
-      사용법 onClick={클릭될 때 실행할 함수}
-      또는 onClick={ () => {실행할 내용} }식으로 함수를 직접 하나 그 자리에서 만들기도 된다  */}
-        <div className="list-design">
-          <h3
-            onClick={() => {
-              modal == true ? modalChangeFunc(false) : modalChangeFunc(true);
-            }}
-          >
-            {" "}
-            {postTitle[0]}{" "}
-          </h3>
-          <span
-            className="like-button"
-            onClick={() => {
-              likeButtonChangeFunc(likeButton + 1);
-            }}
-          >
-            👍
-            {likeButton}
-          </span>
-        </div>
-        <p>2월 17일 발행</p>
-        <hr />
-      </div>
 
-      <div className="list">
-        <h3> {postTitle[1]} </h3>
-        <p>2월 18일 발행</p>
-        <hr />
-      </div>
-
-      <div className="list">
-        <h3> {postTitle[2]}</h3>
-        <p>2월 19일 발행</p>
-        <hr />
-      </div>
+      {/* map을 사용한 같은 게시물 반복문 */}
+      {postTitle.map(function (temp) {
+        return (
+          <div className="list">
+            {/* onclick안에는 함수만 들어갈 수 있다 
+          사용법 onClick={클릭될 때 실행할 함수}
+          또는 onClick={ () => {실행할 내용} }식으로 함수를 직접 하나 그 자리에서 만들기도 된다  */}
+            <div className="list-design">
+              <h3
+                onClick={() => {
+                  modal == true
+                    ? modalChangeFunc(false)
+                    : modalChangeFunc(true);
+                }}
+              >
+                {" "}
+                {temp[0]}{" "}
+              </h3>
+              <span
+                className="like-button"
+                onClick={() => {
+                  likeButtonChangeFunc(likeButton + 1);
+                }}
+              >
+                👍
+                {likeButton}
+              </span>
+            </div>
+            <p> {temp[1]}</p>
+            <hr />
+          </div>
+        );
+      })}
 
       {/* component 만드는 법 */}
       {/* component의 유의사항은:
