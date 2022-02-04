@@ -31,15 +31,6 @@ function App() {
     likeButtonChangeFunc(temp);
   }
 
-  //배열로 되어있는 데이터를 변경할 때는 전체 배열을 받아와서 변경을 하고 다시 배열을 입력해줘야함
-  //글 제목들 알파벳->ㄱㄴㄷ 순으로 정렬 (대신 게시물들의 정보들은 바뀌지 않음)
-  // function changePostTitle() {
-  //   //postTitle에 있는 데이터를 temp에 복사 ([...ex]는 deep copy)
-  //   let temp = [...postTitle];
-  //   temp.sort();
-  //   postTitleChangeFunction(temp);
-  // }
-
   let [modal, modalChangeFunc] = useState(false);
   let [num, numChangeFunc] = useState(0);
 
@@ -49,16 +40,7 @@ function App() {
       <div className="black-nav">
         <div style={titleDesign}>ThinkMuk's Blog</div>
       </div>
-      {/* <button
-        onClick={() => {
-          changePostTitle();
-        }}
-      >
-        버튼
-      </button> */}
 
-      {/* map을 사용한 같은 게시물 반복문 */}
-      {/* 두번째 파라미터를 선언 시 몇번 반복하는지 나오는 int형 숫자를 사용가능 */}
       {postTitle.map(function (temp, i) {
         return (
           <div className="list">
@@ -89,7 +71,7 @@ function App() {
           </div>
         );
       })}
-      {/* 부모 component에서 자식으로 내릴때는 이렇게 작명={state명} 으로 먼저 받아오면 된다 */}
+
       {modal == true ? (
         <Modal
           tempPostInfo={postTitle}
