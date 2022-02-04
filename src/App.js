@@ -109,7 +109,7 @@ function Modal(props) {
     <div className="modal">
       <h2>{props.tempPostInfo[props.tempNum][0]}</h2>
       <p>{props.tempPostInfo[props.tempNum][1]}</p>
-      <p>상세내용</p>
+      <p>👍: {props.tempLike[props.tempNum]}</p>
     </div>
   );
 }
