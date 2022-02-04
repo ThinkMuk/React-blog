@@ -21,6 +21,15 @@ ex) let [tempData, tempDataChangeFunc] = useState(temp);
 -React에서는 배열에 있는 데이터를 변경할 때 전체 배열을 받아와서 변경을 하고 다시 배열을 입력해줘야함
 (하나만 받아와서 변경을 할 시 이상하게 변함)
 * 전체 배열을 받아오는 방식은: let temp = [...배열];
+ex)
+	배열로 되어있는 데이터를 변경할 때는 전체 배열을 받아와서 변경을 하고 다시 배열을 입력해줘야함
+  	글 제목들 알파벳->ㄱㄴㄷ 순으로 정렬 (대신 게시물들의 정보들은 바뀌지 않음)
+	//postTitle에 있는 데이터를 temp에 복사 ([...ex]는 deep copy)
+  	 function changePostTitle() {
+  	   let temp = [...postTitle];
+  	   temp.sort();
+  	   postTitleChangeFunction(temp);
+  	 }
 
 - onclick안에는 함수만 들어갈 수 있다 
 	사용법 onClick={ () => {클릭될 때 실행할 함수} }
@@ -63,8 +72,9 @@ ex) modal == true ? <Modal></Modal> : null (여기서 null은 텅 빈 html을 �
 jsx 안에서는 for문을 사용할 수 없어서 **map**을 사용한다.
 함수 사용법은 : 
 ex) 
-	{ array.map ( function (PARAMETER)  { return (반복할 html + parameter) } ) } 이다
+	{ array.map ( function (PARAMETER1, PARAMETER2)  { return (반복할 html + parameter) } ) } 이다
 (array에 있는 element들을 parameter로 옮겨 함수의 끝까지 반복하면서 parameter에 있는것들을 사용한다)
+(여기서 두번째 파라미터 (parameter2)를 만들면 int형식으로 나와 몇번째로 반복하고 있는지 알 수 있다)
 
 그 외에 jsx 밖에서는 for문을 사용할 수 있으므로 function을 만들어 사용하는 법이 있다.
 ex ) function App () {
@@ -85,3 +95,33 @@ ex ) function App () {
   )
 }
 아래 방법도 있지만 되도록이면 map을 사용하면서 익숙하게 만들어 놓는게 좋을 것 같다.
+
+2022-02-04 Study ______________________________________________________________________________________________________________
+
+- 부모에서 사용하는 값들을 자식으로 내리는 방법
+
+	부모 component에서 자식으로 내릴때는 이렇게: 작명한 이름={state명} 
+	으로 먼저 받아오면 된다
+
+	부모에서 자식으로 내릴때는 props를 사용해 내려야함
+	부모에서 받아올때의 데이터는 모두 지금 'props' 라는 파라미터에 담겨서 내려오는것이다.
+	따라서 이를 부르기 위해서는 props.작명한이름 식으로 불러오면 된다.
+ex)
+데이터를 줄 때: 
+	<Modal
+	tempPostInfo={postTitle}                              ***
+	tempNum={num}                                        *** 이런식으로 부모에 있는 데이터를 받아옴
+	tempLike={likeButton}                                  ***
+	></Modal>
+
+받은 데이터를 function에서 사용할 때:
+	function Modal(props) {
+  		return (
+    		   <div className="modal">
+      		      <h2>{props.tempPostInfo[props.tempNum][0]}</h2>
+      		      <p>{props.tempPostInfo[props.tempNum][1]}</p>
+      		      <p>👍: {props.tempLike[props.tempNum]}</p>
+    		   </div>
+  	   );
+	}
+이런식으로 props안에 모든 데이터들을 담아놓고 사용함
