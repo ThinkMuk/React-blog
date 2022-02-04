@@ -93,17 +93,21 @@ function App() {
 
       {/* 여기서는 if문 대신 삼항연산자 라는것을 사용함 */}
       {/* ex) 조건식 ? 참일 때 실행할 코드 : 거짓일 때 실행할 코드 */}
-      {modal == true ? <Modal></Modal> : null}
+      {/* 부모 component에서 자식으로 내릴때는 이렇게 작명={state명} 으로 먼저 받아오면 된다 */}
+      {modal == true ? <Modal tempPostInfo={postTitle}></Modal> : null}
     </div>
   );
 }
 
 //component 만드는법
-function Modal() {
+// 부모에서 자식으로 내릴때는 props를 사용해 내려야함
+// 부모에서 받아올때의 데이터는 모두 지금 'props' 라는 파라미터에 담겨서 내려오는것이다.
+// 따라서 이를 부르기 위해서는 props.작명한이름 식으로 불러오면 된다.
+function Modal(props) {
   return (
     <div className="modal">
-      <h2>제목</h2>
-      <p>날짜</p>
+      <h2>{props.tempPostInfo[0][0]}</h2>
+      <p>{props.tempPostInfo[0][1]}</p>
       <p>상세내용</p>
     </div>
   );
