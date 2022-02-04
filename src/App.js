@@ -23,7 +23,13 @@ function App() {
     ["C++ 독학", "2월 19일 발행"],
   ]);
   //likeButtonChangeFunc 같은 경우는 likeButton을 바꾸는 함수의 역할을 한다
-  let [likeButton, likeButtonChangeFunc] = useState(0);
+  let [likeButton, likeButtonChangeFunc] = useState([0, 0, 0]);
+
+  function changeLikeNum(i) {
+    let temp = [...likeButton];
+    temp[i] = temp[i] + 1;
+    likeButtonChangeFunc(temp);
+  }
 
   //배열로 되어있는 데이터를 변경할 때는 전체 배열을 받아와서 변경을 하고 다시 배열을 입력해줘야함
   //글 제목들 알파벳->ㄱㄴㄷ 순으로 정렬 (대신 게시물들의 정보들은 바뀌지 않음)
@@ -35,6 +41,7 @@ function App() {
   // }
 
   let [modal, modalChangeFunc] = useState(false);
+  let [num, numChangeFunc] = useState(0);
 
   return (
     // class 대신 className을 사용
@@ -51,18 +58,17 @@ function App() {
       </button> */}
 
       {/* map을 사용한 같은 게시물 반복문 */}
-      {postTitle.map(function (temp) {
+      {/* 두번째 파라미터를 선언 시 몇번 반복하는지 나오는 int형 숫자를 사용가능 */}
+      {postTitle.map(function (temp, i) {
         return (
           <div className="list">
-            {/* onclick안에는 함수만 들어갈 수 있다 
-          사용법 onClick={클릭될 때 실행할 함수}
-          또는 onClick={ () => {실행할 내용} }식으로 함수를 직접 하나 그 자리에서 만들기도 된다  */}
             <div className="list-design">
               <h3
                 onClick={() => {
-                  modal == true
+                  modal == true && num == i
                     ? modalChangeFunc(false)
-                    : modalChangeFunc(true);
+                    : modalChangeFunc(true),
+                    numChangeFunc(i);
                 }}
               >
                 {" "}
@@ -71,11 +77,11 @@ function App() {
               <span
                 className="like-button"
                 onClick={() => {
-                  likeButtonChangeFunc(likeButton + 1);
+                  changeLikeNum(i);
                 }}
               >
                 👍
-                {likeButton}
+                {likeButton[i]}
               </span>
             </div>
             <p> {temp[1]}</p>
@@ -83,31 +89,26 @@ function App() {
           </div>
         );
       })}
-
-      {/* component 만드는 법 */}
-      {/* component의 유의사항은:
-      1.이름은 반드시 첫문자가 대문자일것 
-      2.return()안에 있는건 태그 하나로 묶어야한다 */}
-      {/* component의 단점:
-      1. state를 쓸 때 많이 복잡해짐 (상위 component에서 만든 state 쓰려면 props 문법을 이용해야함) */}
-
-      {/* 여기서는 if문 대신 삼항연산자 라는것을 사용함 */}
-      {/* ex) 조건식 ? 참일 때 실행할 코드 : 거짓일 때 실행할 코드 */}
       {/* 부모 component에서 자식으로 내릴때는 이렇게 작명={state명} 으로 먼저 받아오면 된다 */}
-      {modal == true ? <Modal tempPostInfo={postTitle}></Modal> : null}
+      {modal == true ? (
+        <Modal
+          tempPostInfo={postTitle}
+          tempNum={num}
+          tempLike={likeButton}
+        ></Modal>
+      ) : null}
     </div>
   );
 }
 
-//component 만드는법
 // 부모에서 자식으로 내릴때는 props를 사용해 내려야함
 // 부모에서 받아올때의 데이터는 모두 지금 'props' 라는 파라미터에 담겨서 내려오는것이다.
 // 따라서 이를 부르기 위해서는 props.작명한이름 식으로 불러오면 된다.
 function Modal(props) {
   return (
     <div className="modal">
-      <h2>{props.tempPostInfo[0][0]}</h2>
-      <p>{props.tempPostInfo[0][1]}</p>
+      <h2>{props.tempPostInfo[props.tempNum][0]}</h2>
+      <p>{props.tempPostInfo[props.tempNum][1]}</p>
       <p>상세내용</p>
     </div>
   );
