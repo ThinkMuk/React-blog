@@ -93,9 +93,6 @@ function App() {
         );
       })}
 
-      {/* 사용자가 input에 입력한 값을 state로 저장하는 법 */}
-      {/* 여기서 onChange란 뭔가 입력이 될 때 안에 함수가 실행되는 이벤트헨들러이다 */}
-      {/* 사용자가 입력한 값은 e.target.value (이벤트 동작한 곳.value) */}
       <h3>새로운 글 작성</h3>
       <div className="publish">
         <input
