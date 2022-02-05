@@ -13,17 +13,21 @@ import "./App.css";
 
 function App() {
   //다른 방식의 데이터 바인딩도 가능하다 (state)
-  let titleDesign = { color: "white", fontSize: "30px" };
+  const titleDesign = { color: "white", fontSize: "30px" };
   // let posts = '강남 고기 맛집';
   //useState를 사용할때는 이렇게 2개의 array가 존재해야 한다.
   //이 useState안에는 문자, 숫자, array, object  다 저장이 가능하다
-  let [postTitle, postTitleChangeFunction] = useState([
+  const [postTitle, postTitleChangeFunction] = useState([
     ["남자 코트 추천", "2월 17일 발행"],
     ["강남 우동 맛집", "2월 18일 발행"],
     ["C++ 독학", "2월 19일 발행"],
   ]);
   //likeButtonChangeFunc 같은 경우는 likeButton을 바꾸는 함수의 역할을 한다
-  let [likeButton, likeButtonChangeFunc] = useState([0, 0, 0]);
+  const [likeButton, likeButtonChangeFunc] = useState([0, 0, 0]);
+  const [modal, modalChangeFunc] = useState(false);
+  const [num, numChangeFunc] = useState(0);
+  //기본값은 빈 문자열로 설정
+  const [userInput, userInputChangeFunc] = useState("");
 
   //좋아요 누를시 action하는 function
   function changeLikeNum(i) {
@@ -45,10 +49,10 @@ function App() {
     likeButtonChangeFunc(tempLike);
   }
 
-  let [modal, modalChangeFunc] = useState(false);
-  let [num, numChangeFunc] = useState(0);
-  //기본값은 빈 문자열로 설정
-  let [userInput, userInputChangeFunc] = useState("");
+  function onReset() {
+    userInputChangeFunc("");
+    console.log(userInput);
+  }
 
   return (
     // class 대신 className을 사용
@@ -95,13 +99,17 @@ function App() {
       <h3>새로운 글 작성</h3>
       <div className="publish">
         <input
+          placeholder="입력하세요"
           onChange={(e) => {
             userInputChangeFunc(e.target.value);
           }}
+          // value는 입력창에 떠 있는 값들을 얘기함
+          value={userInput}
         />
         <button
           onClick={() => {
             newPost(userInput);
+            userInputChangeFunc("");
           }}
         >
           저장
