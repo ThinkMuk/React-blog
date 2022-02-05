@@ -141,3 +141,14 @@ ex)
 * 사용자가 입력한 값은 e.target.value (이벤트 동작한 곳.value) 에 저장이 된다
 
 - js안에서 array를 사용할 때 unshift라는 것을 사용하면 array 맨 앞부분에 element를 추가한다
+
+- input 안에 입력을 한 뒤 빈칸으로 다시 만들고 싶을때는 value={바뀌는 값} 을 사용해 다시 정의한다
+ex) 
+        <input
+          placeholder="입력하세요"
+          onChange={(e) => {
+            userInputChangeFunc(e.target.value);
+          }}
+          // value는 입력창에 떠 있는 값들을 얘기함
+          value={userInput}                                                       ****
+        />
