@@ -25,14 +25,30 @@ function App() {
   //likeButtonChangeFunc 같은 경우는 likeButton을 바꾸는 함수의 역할을 한다
   let [likeButton, likeButtonChangeFunc] = useState([0, 0, 0]);
 
+  //좋아요 누를시 action하는 function
   function changeLikeNum(i) {
     let temp = [...likeButton];
     temp[i] = temp[i] + 1;
     likeButtonChangeFunc(temp);
   }
 
+  //새로운 개시물 만드는 function
+  function newPost(inputTitle) {
+    let tempTitleList = [...postTitle];
+    let tempLike = [...likeButton];
+
+    //unshift 를 사용하면 array 함수 맨 앞에 배치시켜준다
+    tempTitleList.unshift([inputTitle, "2월 25일 발행"]);
+    tempLike.unshift(0);
+
+    postTitleChangeFunction(tempTitleList);
+    likeButtonChangeFunc(tempLike);
+  }
+
   let [modal, modalChangeFunc] = useState(false);
   let [num, numChangeFunc] = useState(0);
+  //기본값은 빈 문자열로 설정
+  let [userInput, userInputChangeFunc] = useState("");
 
   return (
     // class 대신 className을 사용
@@ -43,7 +59,8 @@ function App() {
 
       {postTitle.map(function (temp, i) {
         return (
-          <div className="list">
+          //map과 같은 반복문에는 항상 key가 존재해야 warning이 안뜬다
+          <div className="list" key={i}>
             <div className="list-design">
               <h3
                 onClick={() => {
@@ -71,6 +88,25 @@ function App() {
           </div>
         );
       })}
+
+      {/* 사용자가 input에 입력한 값을 state로 저장하는 법 */}
+      {/* 여기서 onChange란 뭔가 입력이 될 때 안에 함수가 실행되는 이벤트헨들러이다 */}
+      {/* 사용자가 입력한 값은 e.target.value (이벤트 동작한 곳.value) */}
+      <h3>새로운 글 작성</h3>
+      <div className="publish">
+        <input
+          onChange={(e) => {
+            userInputChangeFunc(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            newPost(userInput);
+          }}
+        >
+          저장
+        </button>
+      </div>
 
       {modal == true ? (
         <Modal
